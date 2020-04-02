@@ -1,4 +1,5 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const yup = require('yup');
 const authConfig = require('../../config/auth');
 
 const User = require('../models/User');
@@ -6,6 +7,20 @@ const User = require('../models/User');
 class SessionController {
 
   async store(req, res){
+
+    const schema = yup.object().shape({
+      email: yup
+        .string()
+        .email()
+        .required(),
+      password: yup
+        .string()
+        .required()
+    })
+
+    if(!(await schema.isValid(req.body))){
+      return res.status(400).json({ error: 'Validation fails'});
+    }
 
     const { email, password } = req.body;
 
