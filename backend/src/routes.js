@@ -12,5 +12,6 @@ const authMiddleware = require('./app/middlewares/auth');
 routes.post('/sessions', SessionController.store);
 
 routes.post('/recipients', authMiddleware , RecipientController.store);
+routes.put('/recipients/:id',RecipientController.update);
 
 module.exports = routes;

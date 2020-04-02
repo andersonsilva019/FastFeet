@@ -53,6 +53,30 @@ class RecipientController {
       cep
     });
   }
+
+  async update(req, res){
+
+    const { id } = req.params;
+
+    const recipientExists = await Recipient.findOne({ where: { id }})
+
+    if(!recipientExists){
+      return res.status(401).json({ error: ' Recipient not found '});
+    }
+
+    const {name, street, number,complement, state, city, cep} = await recipientExists.update(req.body);
+
+    return res.json({
+      name,
+      street,
+      number,
+      complement,
+      state,
+      city,
+      cep
+    });
+    
+  }
 }
 
 module.exports = new RecipientController();
