@@ -10,6 +10,11 @@ module.exports = {
         primarykey: true
       },
 
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+
       street: {
         type: Sequelize.STRING,
         allowNull: false
