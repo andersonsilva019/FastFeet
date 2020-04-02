@@ -5,9 +5,10 @@ const databaseConfig = require('../config/database');
 
 /* Models */
 const User = require('../app/models/User');
+const Recipients = require('../app/models/Recipients')
 
 /* Onde vai ficar todos os models */
-const models = [User]
+const models = [User, Recipients];
 
 class Database {
   constructor(){
