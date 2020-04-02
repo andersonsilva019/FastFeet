@@ -1,8 +1,39 @@
 const Recipient = require('../models/Recipients');
+const yup = require('yup');
 
 class RecipientController {
+  
   async store(req, res) {
     
+    const schema = yup.object().shape({
+      name: yup
+        .string()
+        .required(),
+      street: yup
+        .string()
+        .required(),
+      number: yup
+        .number()
+        .required(),
+      complement: yup
+        .string(),
+      state: yup
+        .string()
+        .required()
+        .max(2)
+        .min(2), 
+      city: yup
+        .string()
+        .required(),
+      cep: yup 
+        .string()
+        .required()
+    })
+
+    if(! (await schema.isValid(req.body))){
+      return res.status(400).json({ error: 'Validation fails'});
+    }
+
     const recipientExist = await Recipient.findOne({ where: { number: req.body.number}})
     
     if(recipientExist){
